@@ -48,6 +48,7 @@ export default {
       lg: ["1.125rem", "1.2"], // 18px
       base: ["1rem", "1.2"], // 16px
       sm: ["0.875rem", "1.5"], // 14px
+      xs: ["0.75rem", "1.5"], // 12px
     },
     extend: {},
   },
