@@ -26,7 +26,9 @@
   <Card>
     <div class="pl-4 pr-5 mb-1">
       <div class="flex items-center flex-wrap gap-x-6 gap-y-4 mb-4">
-        <h2 class="text-base text-gray-600 font-medium">{{ selectedUsers.length }} users selected</h2>
+        <h2 class="text-base text-gray-600 font-medium">
+          {{ selectedUsers.length }} {{ numberLabel(selectedUsers.length, "user") }} selected
+        </h2>
         <div class="flex gap-2">
           <Button
             label="Edit"
@@ -108,6 +110,8 @@ import useUser from "../../composables/useUser";
 import UserRow from "./UserRow.vue";
 
 import AccountUsersLoader from "../../contentLoaders/AccountUsersLoader.vue";
+
+import { numberLabel } from "../../utils/typography";
 
 import Button from "../../components/Button.vue";
 import Card from "../../components/Card.vue";
