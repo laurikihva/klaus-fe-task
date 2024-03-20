@@ -14,7 +14,11 @@
         />
       </div>
       <div class="shrink-0">
-        <Button label="Connect users" :disabled="!selectedUsers.length" />
+        <Button
+          label="Connect users"
+          :disabled="!selectedUsers.length"
+          @click="console.log('Connect users: ', selectedUsers)"
+        />
       </div>
     </div>
   </div>
@@ -56,10 +60,21 @@
       </div>
     </div>
     <ul class="flex flex-col gap-1">
-      <li v-for="user in filteredUsers" :key="user.id">
+      <li v-for="user in listUsers" :key="user.id">
         <UserRow :user="user" @check="handleCheckedUser" />
       </li>
     </ul>
+    <h3 v-if="showNoResultsMsg" class="text-base font-medium text-gray-600 flex justify-center mt-5">
+      No results found for {{ searchValue }}
+    </h3>
+    <div class="flex justify-center mt-5">
+      <VueAwesomePaginate
+        v-model="currentPage"
+        :total-items="paginationTotalItems"
+        :items-per-page="perPage"
+        :hide-prev-next="true"
+      />
+    </div>
   </Card>
 </template>
 
@@ -77,33 +92,84 @@ import Input from "../../components/Form/Input.vue";
 
 import UserRow from "./UserRow.vue";
 
-const searchValue = ref("");
-
 const { users, loadUsers } = useUser();
 
+const listUsers = computed(() => filteredUsers.value.slice(paginationFrom.value, paginationTo.value));
 const filteredUsers = ref<IUser[]>([]);
 
-const selectAll = ref(false);
-const allChecked = computed(() => filteredUsers.value.every(({ checked }) => checked));
-const someChecked = computed(() => filteredUsers.value.some(({ checked }) => checked));
+// Pagination
+const currentPage = ref(1);
+const perPage = ref(10);
+const paginationFrom = ref(0);
+const paginationTo = ref(perPage.value);
+const paginationTotalItems = computed(() =>
+  searchValue.value.length ? filteredUsers.value.length : users.value.length,
+);
+const handlePagination = () => {
+  paginationFrom.value = currentPage.value === 1 ? 0 : currentPage.value * perPage.value - perPage.value;
+  paginationTo.value = paginationFrom.value + perPage.value;
+  clearAllCheckedUsers();
+};
+watch(currentPage, handlePagination);
 
+// Checkbox related functionality
+const selectedUsers = ref<IUser[]>([]);
+const selectAll = ref(false);
+const allChecked = computed(() => !!filteredUsers.value.length && filteredUsers.value.every(({ checked }) => checked));
+const someChecked = computed(() => !!filteredUsers.value.length && filteredUsers.value.some(({ checked }) => checked));
 const handleSelectAll = () => {
   if (someChecked.value && !allChecked.value) return filteredUsers.value.forEach((user) => (user.checked = true));
   users.value.forEach((user) => (user.checked = !user.checked));
 };
-watch(allChecked, () => {
-  selectAll.value = allChecked.value;
-});
-
-const selectedUsers = ref<IUser[]>([]);
 const handleCheckedUser = (user: IUser) => {
   if (user.checked && !selectedUsers.value.includes(user)) return selectedUsers.value.push(user);
   const index = selectedUsers.value.indexOf(user);
   if (index >= 0 && !user.checked) selectedUsers.value.splice(index, 1);
 };
+const clearAllCheckedUsers = () => {
+  // Clear checked members
+  filteredUsers.value.forEach((user) => {
+    if (!user.checked) return;
+    user.checked = false;
+  });
+  selectedUsers.value = [];
+};
+watch(allChecked, () => {
+  selectAll.value = allChecked.value;
+});
+
+// Filtering
+const searchValue = ref("");
+const showNoResultsMsg = computed(() => searchValue.value.length && !filteredUsers.value.length);
+const handleFilters = () => {
+  filteredUsers.value = users.value;
+
+  clearAllCheckedUsers();
+
+  // Search
+  filteredUsers.value = searchValue.value.length
+    ? users.value.filter(({ name }) => name.toLowerCase().includes(searchValue.value.toLowerCase()))
+    : users.value;
+
+  currentPage.value = 1;
+};
+watch(searchValue, handleFilters);
 
 onMounted(async () => {
   await loadUsers();
-  filteredUsers.value = users.value.slice(0, 10);
+  handleFilters();
 });
 </script>
+
+<style scope>
+.pagination-container {
+  @apply flex gap-1.5;
+}
+.paginate-buttons {
+  @apply w-[30px] h-[30px] rounded cursor-pointer bg-white border border-gray-400 hover:bg-gray-400 text-gray-500 font-medium text-xs focus:shadow-primary focus:outline-none;
+}
+
+.active-page {
+  @apply bg-gray-400 hover:bg-gray-200;
+}
+</style>

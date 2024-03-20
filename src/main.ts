@@ -1,6 +1,9 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 
-import "@/assets/css/tailwind.css";
+import VueAwesomePaginate from "vue-awesome-paginate";
 
-createApp(App).mount("#app");
+import "@/assets/css/tailwind.css";
+import "vue-awesome-paginate/dist/style.css";
+
+createApp(App).use(VueAwesomePaginate).mount("#app");

@@ -12,7 +12,8 @@
     "format": "prettier . --write"
   },
   "dependencies": {
-    "vue": "^3.4.21"
+    "vue": "^3.4.21",
+    "vue-awesome-paginate": "^1.1.46"
   },
   "devDependencies": {
     "@types/node": "^20.11.30",
