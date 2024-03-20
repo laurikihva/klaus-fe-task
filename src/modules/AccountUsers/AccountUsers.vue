@@ -56,7 +56,14 @@
             User
           </Checkbox>
         </div>
-        <div class="basis-2/5">Permission</div>
+        <div class="basis-2/5">
+          <button class="flex items-center gap-1" type="button" @click="handleSortDir">
+            Permission
+            <span :class="computedSortIconClasses">
+              <Icon name="arrowUp" size="medium" />
+            </span>
+          </button>
+        </div>
       </div>
     </div>
     <ul class="flex flex-col gap-1">
@@ -88,9 +95,12 @@ import useUser from "../../composables/useUser";
 import Button from "../../components/Button.vue";
 import Card from "../../components/Card.vue";
 import Checkbox from "../../components/Form/Checkbox.vue";
+import Icon from "../../components/Icon.vue";
 import Input from "../../components/Form/Input.vue";
 
 import UserRow from "./UserRow.vue";
+
+type TSortDir = "asc" | "desc";
 
 const { users, loadUsers } = useUser();
 
@@ -127,7 +137,6 @@ const handleCheckedUser = (user: IUser) => {
   if (index >= 0 && !user.checked) selectedUsers.value.splice(index, 1);
 };
 const clearAllCheckedUsers = () => {
-  // Clear checked members
   filteredUsers.value.forEach((user) => {
     if (!user.checked) return;
     user.checked = false;
@@ -154,6 +163,27 @@ const handleFilters = () => {
   currentPage.value = 1;
 };
 watch(searchValue, handleFilters);
+
+// Sorting
+const sortDir = ref<TSortDir>();
+const handleSortDir = () => {
+  if (!sortDir.value) return (sortDir.value = "asc");
+  sortDir.value = sortDir.value === "asc" ? "desc" : "asc";
+  console.log("Sorter click: ", sortDir.value);
+};
+const computedSortIconClasses = computed(() => {
+  const inactiveClass = !sortDir.value ? "opacity-50" : "";
+  const rotateClass = !sortDir.value || sortDir.value === "asc" ? "rotate-180" : "";
+  return [inactiveClass, rotateClass];
+});
+const handleSorting = () => {
+  if (!sortDir.value) return;
+  filteredUsers.value = users.value.sort((a, b) =>
+    sortDir.value === "asc" ? a.role.localeCompare(b.role) : b.role.localeCompare(a.role),
+  );
+  handleFilters();
+};
+watch(sortDir, handleSorting);
 
 onMounted(async () => {
   await loadUsers();
