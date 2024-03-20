@@ -34,7 +34,7 @@ const buttonColor = computed(() => {
 });
 
 const computedClasses = computed(() => {
-  const base = "rounded text-sm tracking-wider font-medium";
+  const base = "rounded text-sm tracking-wider font-medium focus:shadow-primary focus:outline-none";
   const isSmall = small.value ? "py-1 px-2 min-h-[32px]" : "py-2 px-3 min-h-[40px]";
   const isDisabled = disabled.value ? "cursor-not-allowed opacity-85" : "";
   return [base, buttonColor.value, isSmall, isDisabled];

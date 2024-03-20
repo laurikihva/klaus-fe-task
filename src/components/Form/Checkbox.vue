@@ -1,7 +1,7 @@
 <template>
   <label :class="labelClasses">
     <span class="relative block w-[16px] h-[16px]">
-      <input v-model="model" class="sr-only peer" :checked="model" type="checkbox" :disabled />
+      <input :id v-model="model" class="sr-only peer" :name :checked="model" type="checkbox" :disabled />
       <span :class="checkboxClasses" />
       <span v-if="!indeterminate" :class="checkmarkClasses">
         <Icon name="check" size="small" />
@@ -43,6 +43,7 @@ const checkboxClasses = computed(() => {
     rounded-[3px]
     border
     border-gray-200
+    peer-focus:shadow-primary
   `;
   const checkedClasses = indeterminate.value
     ? "bg-blue-400 border-blue-400"

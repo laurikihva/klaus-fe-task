@@ -1,7 +1,7 @@
 <template>
   <div :class="computedClasses">
     <div class="flex items-center basis-3/5">
-      <Checkbox :id="`${user.id}-check`" v-model="user.checked">
+      <Checkbox :id="`${user.id}-check`" v-model="user.checked" :name="`${user.name} check`">
         <Avatar :name="user.name" :email="user.email" :image="user.avatar" />
       </Checkbox>
     </div>
@@ -9,7 +9,7 @@
       <div class="shrink-0">
         <Tag :label="handleTag(user.role).label" :color="handleTag(user.role).color" />
       </div>
-      <div class="flex items-center gap-2 opacity-0 group-hover:opacity-100">
+      <div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100">
         <Button label="Edit" color="secondary" icon="pencil" small @click="console.log('Edit: ', user)" />
         <Button color="secondary" icon="trash" small @click="console.log('Delete: ', user)" />
       </div>

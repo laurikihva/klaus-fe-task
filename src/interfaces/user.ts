@@ -1,6 +1,6 @@
 type TUserRole = "ADMIN" | "AGENT" | "ACCOUNT_MANAGER" | "EXTERNAL_REVIEWER";
 
-interface IResponseUser {
+interface IUserResponse {
   id: number;
   name: string;
   email: string;
@@ -8,8 +8,12 @@ interface IResponseUser {
   role: TUserRole;
 }
 
-interface IUser extends IResponseUser {
+interface IUserResponseData {
+  users: IUserResponse[];
+}
+
+interface IUser extends IUserResponse {
   checked: boolean;
 }
 
-export type { TUserRole, IResponseUser, IUser };
+export type { TUserRole, IUserResponse, IUserResponseData, IUser };
