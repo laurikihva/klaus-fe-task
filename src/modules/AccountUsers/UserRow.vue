@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, toRefs, computed } from "vue";
+import { PropType, toRefs, computed, watch } from "vue";
 
 import { IUser, TUserRole } from "../../interfaces/user";
 
@@ -39,6 +39,9 @@ const props = defineProps({
   },
 });
 const { user } = toRefs(props);
+const emit = defineEmits<{
+  check: [user: IUser];
+}>();
 
 const computedClasses = computed(() => {
   const base = "flex justify-between gap-2 pl-3 pr-5 min-h-[64px] w-full rounded-md border-l-4 group";
@@ -54,4 +57,12 @@ const handleTag = (role: TUserRole) => {
     EXTERNAL_REVIEWER: { label: "External reviewer", color: "yellow" },
   }[role] as IUserTagItem;
 };
+
+watch(
+  user,
+  () => {
+    emit("check", user.value);
+  },
+  { deep: true },
+);
 </script>

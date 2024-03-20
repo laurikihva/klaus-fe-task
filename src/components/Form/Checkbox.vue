@@ -3,7 +3,7 @@
     <span class="relative block w-[16px] h-[16px]">
       <input v-model="model" class="sr-only peer" :checked="model" type="checkbox" :disabled />
       <span :class="checkboxClasses" />
-      <span v-if="type === 'checkmark'" :class="checkmarkClasses">
+      <span v-if="!indeterminate" :class="checkmarkClasses">
         <Icon name="check" size="small" />
       </span>
       <span v-else :class="indeterminateClasses" />
@@ -17,18 +17,15 @@ import { toRefs, computed } from "vue";
 
 import Icon from "../Icon.vue";
 
-export type TCheckboxType = "checkmark" | "indeterminate";
 export interface ICheckboxProps {
   id: string;
   name?: string;
-  type?: TCheckboxType;
+  indeterminate?: boolean;
   disabled?: boolean;
 }
 
-const props = withDefaults(defineProps<ICheckboxProps>(), {
-  type: "checkmark",
-});
-const { disabled } = toRefs(props);
+const props = defineProps<ICheckboxProps>();
+const { indeterminate, disabled } = toRefs(props);
 
 const model = defineModel<boolean>();
 
@@ -47,7 +44,9 @@ const checkboxClasses = computed(() => {
     border
     border-gray-200
   `;
-  const checkedClasses = "peer-checked:bg-blue-400 peer-checked:border-blue-400";
+  const checkedClasses = indeterminate.value
+    ? "bg-blue-400 border-blue-400"
+    : "peer-checked:bg-blue-400 peer-checked:border-blue-400";
 
   return [base, checkedClasses];
 });

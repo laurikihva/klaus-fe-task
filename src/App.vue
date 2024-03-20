@@ -37,7 +37,12 @@
           </div>
           <div class="flex justify-between text-xs">
             <div class="basis-3/5">
-              <Checkbox id="all-select-check" v-model="selectAll" :type="allChecked ? 'checkmark' : 'indeterminate'">
+              <Checkbox
+                id="all-select-check"
+                v-model="selectAll"
+                :indeterminate="someChecked && !allChecked"
+                @input="handleSelectAll"
+              >
                 User
               </Checkbox>
             </div>
@@ -46,7 +51,7 @@
         </div>
         <ul class="flex flex-col gap-1">
           <li v-for="user in dummyData" :key="user.id">
-            <UserRow :user="user" />
+            <UserRow :user="user" @check="handleCheckedUser" />
           </li>
         </ul>
       </Card>
@@ -114,18 +119,19 @@ const dummyData = ref<IUser[]>([
 const selectAll = ref(false);
 const allChecked = computed(() => dummyData.value.every(({ checked }) => checked));
 const someChecked = computed(() => dummyData.value.some(({ checked }) => checked));
+
 const handleSelectAll = () => {
   if (someChecked.value && !allChecked.value) return dummyData.value.forEach((user) => (user.checked = true));
   dummyData.value.forEach((user) => (user.checked = !user.checked));
 };
-watch(selectAll, handleSelectAll);
+watch(allChecked, () => {
+  selectAll.value = allChecked.value;
+});
 
 const selectedUsers = ref<IUser[]>([]);
-watch(
-  dummyData,
-  () => {
-    selectedUsers.value = dummyData.value.filter(({ checked }) => checked);
-  },
-  { deep: true },
-);
+const handleCheckedUser = (user: IUser) => {
+  if (user.checked && !selectedUsers.value.includes(user)) return selectedUsers.value.push(user);
+  const index = selectedUsers.value.indexOf(user);
+  if (index >= 0 && !user.checked) selectedUsers.value.splice(index, 1);
+};
 </script>
