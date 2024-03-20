@@ -27,7 +27,7 @@ export interface ICheckboxProps {
 const props = defineProps<ICheckboxProps>();
 const { indeterminate, disabled } = toRefs(props);
 
-const model = defineModel<boolean>();
+const model = defineModel<boolean>({ required: true });
 
 const labelClasses = computed(() => {
   const base = "flex items-center gap-2";
