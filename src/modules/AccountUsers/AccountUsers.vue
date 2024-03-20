@@ -11,6 +11,7 @@
           type="text"
           title="Search"
           name="search"
+          :disabled="loadingUsers || !!loadUsersError.length"
         />
       </div>
       <div class="shrink-0">
@@ -51,13 +52,19 @@
             id="all-select-check"
             v-model="selectAll"
             :indeterminate="someChecked && !allChecked"
+            :disabled="loadingUsers || !!loadUsersError.length"
             @input="handleSelectAll"
           >
             User
           </Checkbox>
         </div>
         <div class="basis-2/5">
-          <button class="flex items-center gap-1" type="button" @click="handleSortDir">
+          <button
+            class="flex items-center gap-1 disabled:opacity-70 disabled:cursor-not-allowed"
+            type="button"
+            :disabled="loadingUsers || !!loadUsersError.length"
+            @click="handleSortDir"
+          >
             Permission
             <span :class="computedSortIconClasses">
               <Icon name="arrowUp" size="medium" />
@@ -66,22 +73,28 @@
         </div>
       </div>
     </div>
-    <ul class="flex flex-col gap-1">
-      <li v-for="user in listUsers" :key="user.id">
-        <UserRow :user="user" @check="handleCheckedUser" />
-      </li>
-    </ul>
-    <h3 v-if="showNoResultsMsg" class="text-base font-medium text-gray-600 flex justify-center mt-5">
-      No results found for {{ searchValue }}
+    <AccountUsersLoader v-if="loadingUsers" />
+    <h3 v-else-if="loadUsersError" :class="infoMessageBaseClasses" class="text-red-600">
+      {{ loadUsersError }}
     </h3>
-    <div class="flex justify-center mt-5">
-      <VueAwesomePaginate
-        v-model="currentPage"
-        :total-items="paginationTotalItems"
-        :items-per-page="perPage"
-        :hide-prev-next="true"
-      />
-    </div>
+    <template v-else>
+      <ul class="flex flex-col gap-1">
+        <li v-for="user in listUsers" :key="user.id">
+          <UserRow :user="user" @check="handleCheckedUser" />
+        </li>
+      </ul>
+      <h3 v-if="showNoResultsMsg" :class="infoMessageBaseClasses" class="text-gray-600">
+        No results found for {{ searchValue }}
+      </h3>
+      <div class="flex justify-center mt-5">
+        <VueAwesomePaginate
+          v-model="currentPage"
+          :total-items="paginationTotalItems"
+          :items-per-page="perPage"
+          :hide-prev-next="true"
+        />
+      </div>
+    </template>
   </Card>
 </template>
 
@@ -92,20 +105,24 @@ import { IUser } from "../../interfaces/user";
 
 import useUser from "../../composables/useUser";
 
+import UserRow from "./UserRow.vue";
+
+import AccountUsersLoader from "../../contentLoaders/AccountUsersLoader.vue";
+
 import Button from "../../components/Button.vue";
 import Card from "../../components/Card.vue";
 import Checkbox from "../../components/Form/Checkbox.vue";
 import Icon from "../../components/Icon.vue";
 import Input from "../../components/Form/Input.vue";
 
-import UserRow from "./UserRow.vue";
-
 type TSortDir = "asc" | "desc";
 
-const { users, loadUsers } = useUser();
+const { loadingUsers, users, loadUsersError, loadUsers } = useUser();
 
 const listUsers = computed(() => filteredUsers.value.slice(paginationFrom.value, paginationTo.value));
 const filteredUsers = ref<IUser[]>([]);
+
+const infoMessageBaseClasses = "text-base font-medium flex justify-center mt-5";
 
 // Pagination
 const currentPage = ref(1);
