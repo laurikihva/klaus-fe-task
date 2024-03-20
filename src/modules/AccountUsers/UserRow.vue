@@ -5,7 +5,7 @@
         <Avatar :name="user.name" :email="user.email" :image="user.avatar" />
       </Checkbox>
     </div>
-    <div class="flex items-center justify-between gap-4 basis-2/5">
+    <div class="flex items-center justify-between gap-2 basis-2/5 flex-wrap">
       <div class="shrink-0">
         <Tag :label="handleTag(user.role).label" :color="handleTag(user.role).color" />
       </div>
@@ -44,7 +44,8 @@ const emit = defineEmits<{
 }>();
 
 const computedClasses = computed(() => {
-  const base = "flex justify-between gap-2 pl-3 pr-5 min-h-[64px] w-full rounded-md border-l-4 group";
+  const base =
+    "flex flex-col sm:flex-row justify-between gap-2 pl-3 pr-5 py-2 min-h-[64px] w-full rounded-md border-l-4 group";
   const activeClasses = user.value.checked ? "bg-gray-300 border-blue-400" : "border-white";
   return [base, activeClasses];
 });

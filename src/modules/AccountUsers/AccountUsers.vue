@@ -1,7 +1,7 @@
 <template>
-  <div class="flex items-center mb-5">
+  <div class="flex flex-col sm:flex-row sm:items-center mb-5 gap-x-2 gap-y-4">
     <h1 class="text-lg font-medium">Account users</h1>
-    <div class="flex gap-2 flex-grow justify-end">
+    <div class="flex gap-2 flex-grow sm:justify-end">
       <div class="max-w-[205px] w-full">
         <Input
           id="search-input"
@@ -24,7 +24,7 @@
   </div>
   <Card>
     <div class="pl-4 pr-5 mb-1">
-      <div class="flex items-center gap-6 mb-4">
+      <div class="flex items-center flex-wrap gap-x-6 gap-y-4 mb-4">
         <h2 class="text-base text-gray-600 font-medium">{{ selectedUsers.length }} users selected</h2>
         <div class="flex gap-2">
           <Button
