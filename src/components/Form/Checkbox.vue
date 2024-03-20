@@ -6,14 +6,14 @@
       <span v-if="!indeterminate" :class="checkmarkClasses">
         <Icon name="check" size="small" />
       </span>
-      <span v-else :class="indeterminateClasses" />
+      <span v-else ref="indeterminateRef" :class="indeterminateClasses" />
     </span>
     <slot />
   </label>
 </template>
 
 <script lang="ts" setup>
-import { toRefs, computed } from "vue";
+import { toRefs, ref, computed } from "vue";
 
 import Icon from "../Icon.vue";
 
@@ -28,6 +28,8 @@ const props = defineProps<ICheckboxProps>();
 const { indeterminate, disabled } = toRefs(props);
 
 const model = defineModel<boolean>({ required: true });
+
+const indeterminateRef = ref();
 
 const labelClasses = computed(() => {
   const base = "flex items-center gap-2";

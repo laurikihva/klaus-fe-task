@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Loads and displays Checkbox component > renders correctly 1`] = `
+"<label class="flex items-center gap-2 cursor-not-allowed opacity-50"><span class="relative block w-[16px] h-[16px]"><input id="my-check" class="sr-only peer" type="checkbox" disabled=""><span class="block
+    w-full
+    h-full
+    rounded-[3px]
+    border
+    border-gray-200
+    peer-focus:shadow-primary peer-checked:bg-blue-400 peer-checked:border-blue-400"></span><span class="text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 8" class="w-[10px] h-[10px]"><path d="M7.853.808a1 1 0 0 1 1.488.04l.066.078a1 1 0 0 1-.047 1.348l-4.595 4.69a1 1 0 0 1-1.429 0L.654 4.224A1 1 0 0 1 .62 2.861l.047-.053a1 1 0 0 1 1.477-.019L4.05 4.824z"></path></svg></span></span>Checkbox</label>"
+`;

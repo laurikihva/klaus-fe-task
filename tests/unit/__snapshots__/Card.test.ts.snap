@@ -1,0 +1,3 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Loads and displays Card component > renders correctly 1`] = `"<div class="bg-white rounded-lg px-4 py-6">Card content</div>"`;
