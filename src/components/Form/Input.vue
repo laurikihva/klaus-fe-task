@@ -13,7 +13,7 @@
 <script lang="ts" setup>
 import { toRefs, computed, useAttrs } from "vue";
 
-import Icon, { TIconName } from "../Icon.vue";
+import Icon, { TIconName } from "@/components/Icon.vue";
 
 export interface IInputProps {
   id: string;
@@ -34,7 +34,7 @@ const model = defineModel<string | number>({ required: true });
 const attrs = useAttrs();
 
 const computedInputClasses = computed(() => {
-  const base = "w-full min-h-[40px] pr-2 py-2 placeholder:text-gray-100 enabled:focus:outline-blue-400";
+  const base = "w-full min-h-[40px] pr-2 py-2 placeholder:text-gray-100 enabled:focus:outline-blue-400 rounded";
   const withIcon = icon.value ? "pl-8" : "pl-2";
 
   return [base, withIcon];

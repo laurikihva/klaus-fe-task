@@ -10,7 +10,7 @@
 <script lang="ts" setup>
 import { toRefs, computed } from "vue";
 
-import Icon, { TIconName } from "./Icon.vue";
+import Icon, { TIconName } from "@/components/Icon.vue";
 
 export type TButtonColor = "primary" | "secondary";
 export interface IButtonProps {

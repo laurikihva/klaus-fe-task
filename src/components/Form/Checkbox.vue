@@ -1,6 +1,6 @@
 <template>
   <label :class="labelClasses">
-    <span class="relative block w-[16px] h-[16px]">
+    <span class="relative block w-[16px] h-[16px] shrink-0">
       <input :id v-model="model" class="sr-only peer" :name :checked="model" type="checkbox" :disabled />
       <span :class="checkboxClasses" />
       <span v-if="!indeterminate" :class="checkmarkClasses">
@@ -15,7 +15,7 @@
 <script lang="ts" setup>
 import { toRefs, ref, computed } from "vue";
 
-import Icon from "../Icon.vue";
+import Icon from "@/components/Icon.vue";
 
 export interface ICheckboxProps {
   id: string;
@@ -32,7 +32,7 @@ const model = defineModel<boolean>({ required: true });
 const indeterminateRef = ref();
 
 const labelClasses = computed(() => {
-  const base = "flex items-center gap-2";
+  const base = "flex items-center gap-2 w-full";
   const isDisabled = disabled.value ? "cursor-not-allowed opacity-50" : "cursor-pointer";
 
   return [base, isDisabled];

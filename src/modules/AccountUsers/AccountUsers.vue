@@ -54,7 +54,7 @@
             id="all-select-check"
             v-model="selectAll"
             :indeterminate="someChecked && !allChecked"
-            :disabled="loadingUsers || !!loadUsersError.length"
+            :disabled="loadingUsers || !users.length || !!loadUsersError.length"
             @input="handleSelectAll"
           >
             User
@@ -64,7 +64,7 @@
           <button
             class="flex items-center gap-1 disabled:opacity-70 disabled:cursor-not-allowed"
             type="button"
-            :disabled="loadingUsers || !!loadUsersError.length"
+            :disabled="loadingUsers || !users.length || !!loadUsersError.length"
             @click="handleSortDir"
           >
             Permission
@@ -79,7 +79,7 @@
     <h3 v-else-if="loadUsersError" :class="infoMessageBaseClasses" class="text-red-600">
       {{ loadUsersError }}
     </h3>
-    <template v-else>
+    <template v-else-if="users.length">
       <ul class="flex flex-col gap-1">
         <li v-for="user in listUsers" :key="user.id">
           <UserRow :user="user" @check="handleCheckedUser" />
@@ -97,27 +97,35 @@
         />
       </div>
     </template>
+    <div v-else>
+      <h3 :class="infoMessageBaseClasses" class="text-gray-600">
+        You don't have any users. Go add first users to get started!
+      </h3>
+      <div class="flex justify-center mt-5">
+        <Button label="Add users" @click="console.log('Add users')" />
+      </div>
+    </div>
   </Card>
 </template>
 
 <script lang="ts" setup>
 import { ref, computed, watch, onMounted } from "vue";
 
-import { IUser } from "../../interfaces/user";
+import { IUser } from "@/interfaces/user";
 
-import useUser from "../../composables/useUser";
+import useUser from "@/composables/useUser";
 
-import UserRow from "./UserRow.vue";
+import UserRow from "@/modules/AccountUsers/UserRow.vue";
 
-import AccountUsersLoader from "../../contentLoaders/AccountUsersLoader.vue";
+import AccountUsersLoader from "@/contentLoaders/AccountUsersLoader.vue";
 
-import { numberLabel } from "../../utils/typography";
+import { numberLabel } from "@/utils/typography";
 
-import Button from "../../components/Button.vue";
-import Card from "../../components/Card.vue";
-import Checkbox from "../../components/Form/Checkbox.vue";
-import Icon from "../../components/Icon.vue";
-import Input from "../../components/Form/Input.vue";
+import Button from "@/components/Button.vue";
+import Card from "@/components/Card.vue";
+import Checkbox from "@/components/Form/Checkbox.vue";
+import Icon from "@/components/Icon.vue";
+import Input from "@/components/Form/Input.vue";
 
 type TSortDir = "asc" | "desc";
 

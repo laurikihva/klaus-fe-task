@@ -1,5 +1,5 @@
 <template>
-  <content-loader view-box="0 0 700 200" :speed="2" primary-color="#cbd5e0" secondary-color="#e2e8f0">
+  <content-loader view-box="0 0 700 194" :speed="2" primary-color="#cbd5e0" secondary-color="#e2e8f0">
     <!-- First row -->
     <rect x="16" y="24" rx="4" ry="4" width="18" height="18" />
     <rect x="41" y="17" rx="16" ry="16" width="34" height="32" />

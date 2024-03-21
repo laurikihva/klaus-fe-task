@@ -20,12 +20,12 @@
 <script lang="ts" setup>
 import { PropType, toRefs, computed, watch } from "vue";
 
-import { IUser, TUserRole } from "../../interfaces/user";
+import { IUser, TUserRole } from "@/interfaces/user";
 
-import Avatar from "../../components/Avatar.vue";
-import Button from "../../components/Button.vue";
-import Checkbox from "../../components/Form/Checkbox.vue";
-import Tag, { TTagColor } from "../../components/Tag.vue";
+import Avatar from "@/components/Avatar.vue";
+import Button from "@/components/Button.vue";
+import Checkbox from "@/components/Form/Checkbox.vue";
+import Tag, { TTagColor } from "@/components/Tag.vue";
 
 interface IUserTagItem {
   label: string;
