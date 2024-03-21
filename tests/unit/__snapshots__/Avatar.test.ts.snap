@@ -3,6 +3,6 @@
 exports[`Loads and displays Avatar component > renders correctly 1`] = `
 "<div class="flex gap-3 items-center overflow-hidden">
   <div class="w-[32px] h-[32px] rounded-full overflow-hidden text-xs shrink-0"><img src="https://placehold.co/32x32" alt="Test Name"></div>
-  <div class="flex flex-col gap-0.5 text-sm overflow-hidden"><span class="font-medium text-ellipsis overflow-hidden">Test Name</span><span class="text-gray-700 text-ellipsis overflow-hidden">test.name@email.com</span></div>
+  <div class="flex flex-col gap-0.5 text-sm overflow-hidden"><span class="font-medium text-ellipsis text-nowrap overflow-hidden">Test Name</span><span class="text-gray-700 text-ellipsis overflow-hidden">test.name@email.com</span></div>
 </div>"
 `;

@@ -4,7 +4,7 @@
       <img :src="image" :alt="name" />
     </div>
     <div class="flex flex-col gap-0.5 text-sm overflow-hidden">
-      <span class="font-medium text-ellipsis overflow-hidden">{{ name }}</span>
+      <span class="font-medium text-ellipsis text-nowrap overflow-hidden">{{ name }}</span>
       <span class="text-gray-700 text-ellipsis overflow-hidden">{{ email }}</span>
     </div>
   </div>
