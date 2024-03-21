@@ -54,7 +54,7 @@
             id="all-select-check"
             v-model="selectAll"
             :indeterminate="someChecked && !allChecked"
-            :disabled="loadingUsers || !users.length || !!loadUsersError.length"
+            :disabled="loadingUsers || !listUsers.length || !!loadUsersError.length"
             @input="handleSelectAll"
           >
             User
@@ -64,7 +64,7 @@
           <button
             class="flex items-center gap-1 disabled:opacity-70 disabled:cursor-not-allowed"
             type="button"
-            :disabled="loadingUsers || !users.length || !!loadUsersError.length"
+            :disabled="loadingUsers || !listUsers.length || !!loadUsersError.length"
             @click="handleSortDir"
           >
             Permission
