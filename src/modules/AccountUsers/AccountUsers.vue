@@ -154,11 +154,11 @@ watch(currentPage, handlePagination);
 // Checkbox related functionality
 const selectedUsers = ref<IUser[]>([]);
 const selectAll = ref(false);
-const allChecked = computed(() => !!filteredUsers.value.length && filteredUsers.value.every(({ checked }) => checked));
-const someChecked = computed(() => !!filteredUsers.value.length && filteredUsers.value.some(({ checked }) => checked));
+const allChecked = computed(() => !!listUsers.value.length && listUsers.value.every(({ checked }) => checked));
+const someChecked = computed(() => !!listUsers.value.length && listUsers.value.some(({ checked }) => checked));
 const handleSelectAll = () => {
-  if (someChecked.value && !allChecked.value) return filteredUsers.value.forEach((user) => (user.checked = true));
-  users.value.forEach((user) => (user.checked = !user.checked));
+  if (someChecked.value && !allChecked.value) return listUsers.value.forEach((user) => (user.checked = true));
+  listUsers.value.forEach((user) => (user.checked = !user.checked));
 };
 const handleCheckedUser = (user: IUser) => {
   if (user.checked && !selectedUsers.value.includes(user)) return selectedUsers.value.push(user);
@@ -166,7 +166,7 @@ const handleCheckedUser = (user: IUser) => {
   if (index >= 0 && !user.checked) selectedUsers.value.splice(index, 1);
 };
 const clearAllCheckedUsers = () => {
-  filteredUsers.value.forEach((user) => {
+  listUsers.value.forEach((user) => {
     if (!user.checked) return;
     user.checked = false;
   });
@@ -198,7 +198,6 @@ const sortDir = ref<TSortDir>();
 const handleSortDir = () => {
   if (!sortDir.value) return (sortDir.value = "asc");
   sortDir.value = sortDir.value === "asc" ? "desc" : "asc";
-  console.log("Sorter click: ", sortDir.value);
 };
 const computedSortIconClasses = computed(() => {
   const inactiveClass = !sortDir.value ? "opacity-50" : "";
