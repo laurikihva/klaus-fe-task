@@ -15,11 +15,7 @@
         />
       </div>
       <div class="shrink-0">
-        <Button
-          label="Connect users"
-          :disabled="!selectedUsers.length"
-          @click="console.log('Connect users: ', selectedUsers)"
-        />
+        <Button label="Connect users" @click="console.log('Connect users')" />
       </div>
     </div>
   </div>
@@ -219,7 +215,7 @@ onMounted(async () => {
 });
 </script>
 
-<style scope>
+<style>
 .pagination-container {
   @apply flex gap-1.5;
 }
