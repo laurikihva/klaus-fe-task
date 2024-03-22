@@ -45,8 +45,8 @@ const emit = defineEmits<{
 
 const computedClasses = computed(() => {
   const base =
-    "flex flex-col sm:flex-row justify-between gap-2 pl-3 pr-5 py-2 min-h-[64px] w-full rounded-md border-l-4 group";
-  const activeClasses = user.value.checked ? "bg-gray-300 border-blue-400" : "border-white";
+    "flex flex-col sm:flex-row justify-between gap-2 pl-3 pr-5 py-2 min-h-[64px] w-full rounded-md border-l-4 hover:bg-gray-300 group";
+  const activeClasses = user.value.checked ? "bg-gray-300 border-blue-400" : "border-white hover:border-gray-300";
   return [base, activeClasses];
 });
 

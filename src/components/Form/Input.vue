@@ -35,7 +35,7 @@ const attrs = useAttrs();
 
 const computedInputClasses = computed(() => {
   const base =
-    "w-full min-h-[40px] pr-2 py-2 placeholder:text-gray-100 enabled:focus:outline-blue-400 rounded bg-white disabled:opacity-50";
+    "w-full min-h-[40px] pr-2 py-2 placeholder:text-gray-100 enabled:focus:outline-blue-400 rounded bg-white disabled:opacity-50 border border-gray-400";
   const withIcon = icon.value ? "pl-8" : "pl-2";
 
   return [base, withIcon];

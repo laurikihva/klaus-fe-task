@@ -220,7 +220,7 @@ onMounted(async () => {
   @apply flex gap-1.5;
 }
 .paginate-buttons {
-  @apply w-[30px] h-[30px] rounded cursor-pointer bg-white border border-gray-400 hover:bg-gray-400 text-gray-500 font-medium text-xs focus:shadow-primary focus:outline-none;
+  @apply w-[30px] h-[30px] rounded cursor-pointer bg-white border border-gray-400 hover:bg-gray-400 text-gray-500 font-medium text-xs shadow focus:shadow-primary focus:outline-none;
 }
 
 .active-page {

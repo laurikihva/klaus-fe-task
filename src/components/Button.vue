@@ -29,7 +29,7 @@ const { color, small, disabled } = toRefs(props);
 const buttonColor = computed(() => {
   return {
     primary: "text-white bg-blue-400 enabled:hover:bg-blue-500",
-    secondary: "text-gray-500 bg-white border border-gray-400 enabled:hover:bg-gray-400",
+    secondary: "text-gray-500 bg-white border border-gray-400 enabled:hover:bg-gray-400 shadow",
   }[color.value];
 });
 
